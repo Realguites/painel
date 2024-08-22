@@ -1,0 +1,6 @@
+.vscode
+.gradle
+.mvn
+bin
+build
+gradle
