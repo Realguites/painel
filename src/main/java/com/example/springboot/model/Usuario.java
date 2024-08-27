@@ -48,6 +48,4 @@ public class Usuario {
         this.nivel = nivel;
     }
 
-
-
 }

@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  banco:
+  postgres:
     image: postgres:15
     container_name: postgres-db
     environment:
@@ -13,10 +13,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - postgres-network
-
+      - app-network
 volumes:
   postgres_data:
 
 networks:
-  postgres-network:
+  app-network:
