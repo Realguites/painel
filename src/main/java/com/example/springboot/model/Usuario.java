@@ -11,7 +11,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
-    private String name;
+    private String nome;
     private String email;
     private String senha;
     private Long nivel;
@@ -23,11 +23,11 @@ public class Usuario {
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     public String getEmail() {
         return email;
