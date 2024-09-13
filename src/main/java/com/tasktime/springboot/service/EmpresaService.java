@@ -1,7 +1,7 @@
-package com.example.springboot.service;
+package com.tasktime.springboot.service;
 
-import com.example.springboot.model.Empresa;
-import com.example.springboot.repository.EmpresaRepository;
+import com.tasktime.springboot.model.Empresa;
+import com.tasktime.springboot.repository.EmpresaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,15 @@
-package com.example.springboot.model;
+package com.tasktime.springboot.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Usuario {
+public class Usuario extends BasicModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
@@ -15,6 +17,10 @@ public class Usuario {
     private String email;
     private String senha;
     private Long nivel;
+
+    @ManyToOne
+    @JoinColumn(name = "id_empresa") // Nome da coluna FK
+    private Empresa empresa;
 
 
     public Long getIdUsuario() {
@@ -46,6 +52,12 @@ public class Usuario {
     }
     public void setNivel(Long nivel) {
         this.nivel = nivel;
+    }
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
 }

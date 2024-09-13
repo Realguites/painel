@@ -1,4 +1,4 @@
-package com.example.springboot.enums;
+package com.tasktime.springboot.enums;
 
 public enum IdentificacaoPrioridade {
     NORMAL("Normal"),

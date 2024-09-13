@@ -1,16 +1,27 @@
-package com.example.springboot.model;
+package com.tasktime.springboot.model;
 
 import java.sql.Date;
-import com.example.springboot.enums.IdentificacaoPrioridade;
+import com.tasktime.springboot.enums.IdentificacaoPrioridade;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-public class Ficha {
+@Entity
+public class Ficha extends BasicModel{
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idFicha;
     private Long numero;
     private IdentificacaoPrioridade identPrioridade;
     private Date horarioCriacao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_empresa") // Nome da coluna FK
+    private Empresa empresa;
 
     public Long getIdFicha() {
         return idFicha;
@@ -36,5 +47,13 @@ public class Ficha {
     public void setHorarioCriacao(Date horarioCriacao) {
         this.horarioCriacao = horarioCriacao;
     }
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    
 
 }

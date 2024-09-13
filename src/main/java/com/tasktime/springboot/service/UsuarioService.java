@@ -1,7 +1,7 @@
-package com.example.springboot.service;
+package com.tasktime.springboot.service;
 
-import com.example.springboot.model.Usuario;
-import com.example.springboot.repository.UsuarioRepository;
+import com.tasktime.springboot.model.Usuario;
+import com.tasktime.springboot.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

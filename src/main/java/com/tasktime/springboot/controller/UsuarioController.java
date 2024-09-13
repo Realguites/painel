@@ -1,11 +1,9 @@
-package com.example.springboot.controller;
+package com.tasktime.springboot.controller;
 
-import com.example.springboot.model.Usuario;
-import com.example.springboot.service.UsuarioService;
+import com.tasktime.springboot.model.Usuario;
+import com.tasktime.springboot.service.UsuarioService;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +15,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 
 @RestController
+@RequestMapping("/usuarios")
 public class UsuarioController {
-    private Map<Long, Boolean> verificaAtualizacao;
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/usuarios")
+    @GetMapping
     public List<Usuario> getAllModels() {
         return usuarioService.getAllUsuarios();
     }
 
-    @GetMapping("/hello")
-    public String buscarProdutos(@RequestParam(name = "nome") String nome) {
-        // Lógica para buscar produtos pelo nome
-        usuarioService.teste(nome);
-        return "dsdsdsds";
-    }
 
     //@GetMapping("/{id}")
     public ResponseEntity<Optional<Usuario>> getUsuarioById(@PathVariable Long id) {

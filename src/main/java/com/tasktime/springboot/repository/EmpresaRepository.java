@@ -1,6 +1,6 @@
-package com.example.springboot.repository;
+package com.tasktime.springboot.repository;
 
-import com.example.springboot.model.Empresa;
+import com.tasktime.springboot.model.Empresa;
 
 import java.util.List;
 

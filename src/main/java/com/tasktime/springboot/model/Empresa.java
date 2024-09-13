@@ -1,15 +1,21 @@
-package com.example.springboot.model;
+package com.tasktime.springboot.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class Empresa {
+public class Empresa extends BasicModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmpresa;
@@ -20,8 +26,23 @@ public class Empresa {
     private String telefone;
     private String nomeContato;
     private String tipoJuridico;
-    private Date dataCadastro;
-    private Date dataAlteracao;
+
+
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "empresa", orphanRemoval = true)
+    private List<Ficha> fichas = new ArrayList<>();
+
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 
     public Empresa(){
 
@@ -91,22 +112,12 @@ public class Empresa {
         this.tipoJuridico = tipoJuridico;
     }
 
-    public Date getDataCadastro() {
-        return dataCadastro;
+    public List<Ficha> getFichas() {
+        return fichas;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setFichas(List<Ficha> fichas) {
+        this.fichas = fichas;
     }
-
-    public Date getDataAlteracao() {
-        return dataAlteracao;
-    }
-
-    public void setDataAlteracao(Date dataAlteracao) {
-        this.dataAlteracao = dataAlteracao;
-    }
-
-    
 
 }
