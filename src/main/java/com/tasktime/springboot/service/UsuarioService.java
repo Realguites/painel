@@ -2,11 +2,8 @@ package com.tasktime.springboot.service;
 
 import com.tasktime.springboot.model.Usuario;
 import com.tasktime.springboot.repository.UsuarioRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;

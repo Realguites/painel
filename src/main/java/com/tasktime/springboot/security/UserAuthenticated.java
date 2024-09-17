@@ -15,6 +15,10 @@ public class UserAuthenticated implements UserDetails {
     this.user = user;
   }
 
+  public Usuario getUsuario(){
+    return user;
+  }
+
   @Override
   public String getUsername() {
     return user.getEmail();

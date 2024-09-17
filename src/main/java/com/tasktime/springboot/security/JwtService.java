@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.tasktime.springboot.model.Usuario;
+
 @Service
 public class JwtService {
   private final JwtEncoder encoder;
@@ -21,6 +23,14 @@ public class JwtService {
   public String generateToken(Authentication authentication) {
     Instant now = Instant.now();
     long expiry = 36000L;
+
+    Object principal = authentication.getPrincipal();
+    Usuario usuario = null;
+    try{
+      usuario = ((UserAuthenticated)((Object) principal)).getUsuario();
+    }catch(Exception e){
+    }
+    
 
     String scope = authentication
         .getAuthorities().stream()
@@ -34,9 +44,8 @@ public class JwtService {
         .expiresAt(now.plusSeconds(expiry))
         .subject(authentication.getName())
         .claim("scope", scope)
-        .claim("sdsdsde", scope)
-        .claim("scdsdsdsdope", "VOU METER ALGUMA CONF")
-        .claim("scsdsdsdsdope", scope)
+        .claim("nivelUsuario", usuario != null ? usuario.getNivel() : null)
+        .claim("nomeUsuario", usuario != null ? usuario.getNome() : null)
         .build();
 
     return encoder.encode(
