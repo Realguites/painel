@@ -1,5 +1,6 @@
 package com.tasktime.springboot.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,9 @@ public class Usuario extends BasicModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
     private String nome;
+
+    @Column(unique=true)
+    
     private String email;
     private String senha;
     private Long nivel;

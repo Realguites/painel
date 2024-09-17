@@ -18,8 +18,6 @@ public class AuthenticationController {
   @PostMapping("/authenticate")
   public String authenticate(@RequestBody AuthenticationRequestDto authRequest) {
 
-    System.out.println("BATATATATA¨SAASTAYSA " + authRequest.toString());
-
     Authentication authentication = authenticationService.authenticate(authRequest.getUsername(), authRequest.getPassword());
     return authenticationService.generateToken(authentication);
   }

@@ -21,7 +21,6 @@ public class JwtService {
   public String generateToken(Authentication authentication) {
     Instant now = Instant.now();
     long expiry = 36000L;
-    System.out.println("BATATA1");
 
     String scope = authentication
         .getAuthorities().stream()
@@ -35,6 +34,9 @@ public class JwtService {
         .expiresAt(now.plusSeconds(expiry))
         .subject(authentication.getName())
         .claim("scope", scope)
+        .claim("sdsdsde", scope)
+        .claim("scdsdsdsdope", "VOU METER ALGUMA CONF")
+        .claim("scsdsdsdsdope", scope)
         .build();
 
     return encoder.encode(

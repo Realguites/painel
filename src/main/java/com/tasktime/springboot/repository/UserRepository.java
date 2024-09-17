@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.tasktime.springboot.model.User;
+import com.tasktime.springboot.model.Usuario;
 
-public interface UserRepository extends CrudRepository<User, String> {
-  Optional<User> findByUsername(String username);
+public interface UserRepository extends CrudRepository<Usuario, Long> {
+  Optional<Usuario> findByEmail(String username);
 }

@@ -36,17 +36,17 @@ public class SecurityConfig {
 
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    System.out.println("BATATATA: " + http.toString());
-    http.csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(
-            auth -> auth
-                .requestMatchers("/authenticate").permitAll()
-                .anyRequest().authenticated())
-        .httpBasic(Customizer.withDefaults())
-        .oauth2ResourceServer(
-            conf -> conf.jwt(
-                jwt -> jwt.decoder(jwtDecoder())));
-    return http.build();
+      http.csrf(csrf -> csrf.disable())
+          .authorizeHttpRequests(
+              auth -> auth
+                  .requestMatchers("/authenticate").permitAll()  
+                  .requestMatchers("/fichas").permitAll()  
+                  .anyRequest().authenticated())  
+          .httpBasic(Customizer.withDefaults())
+          .oauth2ResourceServer(
+              conf -> conf.jwt(
+                  jwt -> jwt.decoder(jwtDecoder())));
+      return http.build();
   }
 
   @Bean

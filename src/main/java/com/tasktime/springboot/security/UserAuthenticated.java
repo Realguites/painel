@@ -6,23 +6,23 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.tasktime.springboot.model.User;
+import com.tasktime.springboot.model.Usuario;
 
 public class UserAuthenticated implements UserDetails {
-  private final User user;
+  private final Usuario user;
 
-  public UserAuthenticated(User user) {
+  public UserAuthenticated(Usuario user) {
     this.user = user;
   }
 
   @Override
   public String getUsername() {
-    return user.getUsername();
+    return user.getEmail();
   }
 
   @Override
   public String getPassword() {
-    return user.getPassword();
+    return user.getSenha();
   }
 
   @Override
