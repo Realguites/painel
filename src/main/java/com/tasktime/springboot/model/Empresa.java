@@ -29,13 +29,14 @@ public class Empresa extends BasicModel{
 
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Usuario> usuarios = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "empresa", orphanRemoval = true)
     private List<Ficha> fichas = new ArrayList<>();
 
-
+    
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
