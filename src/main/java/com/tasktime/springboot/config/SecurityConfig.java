@@ -35,20 +35,20 @@ public class SecurityConfig {
   private RSAPrivateKey priv;
 
   @Bean
-  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-      http.csrf(csrf -> csrf.disable())
-          .authorizeHttpRequests(
-              auth -> auth
-                  .requestMatchers("/authenticate").permitAll()  
-                  .requestMatchers("/fichas").permitAll()  
-                  .anyRequest().authenticated())  
-          .httpBasic(Customizer.withDefaults())
-          .oauth2ResourceServer(
-              conf -> conf.jwt(
-                  jwt -> jwt.decoder(jwtDecoder())));
-      return http.build();
-  }
-
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) 
+            .cors(cors -> cors.configure(http)) 
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/authenticate").permitAll()  
+                .requestMatchers("/fichas").permitAll()      
+                .anyRequest().authenticated() 
+            )
+            .httpBasic(Customizer.withDefaults()) 
+            .oauth2ResourceServer(conf -> conf.jwt(
+              jwt -> jwt.decoder(jwtDecoder()))); 
+        return http.build();
+    }
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
