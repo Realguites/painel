@@ -44,8 +44,9 @@ public class JwtService {
         .expiresAt(now.plusSeconds(expiry))
         .subject(authentication.getName())
         .claim("scope", scope)
-        .claim("nivelUsuario", usuario != null ? usuario.getNivel() : null)
+        .claim("tipoUsuario", usuario != null ? usuario.getTipoUsuario() : null)
         .claim("nomeUsuario", usuario != null ? usuario.getNome() : null)
+        .claim("needUpdatePass", usuario != null ? usuario.getNeedUpdatePass() : null)
         .build();
 
     return encoder.encode(

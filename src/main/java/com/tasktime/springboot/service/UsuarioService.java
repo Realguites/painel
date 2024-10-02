@@ -1,13 +1,16 @@
 package com.tasktime.springboot.service;
 
+import com.tasktime.springboot.dto.UsuarioDTO;
+import com.tasktime.springboot.model.Empresa;
 import com.tasktime.springboot.model.Usuario;
 import com.tasktime.springboot.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -15,7 +18,18 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> getAllUsuarios() {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public List<UsuarioDTO> getAllUsuarios() {
+        return fromEntityList(usuarioRepository.findAll());
+    }
+
+    public List<UsuarioDTO> getAllUsuarios(Empresa empresa) {
+        return fromEntityList(usuarioRepository.findByEmpresa(empresa));
+    }
+
+    public List<Usuario> getUsuarioByEmail() {
         return usuarioRepository.findAll();
     }
 
@@ -23,31 +37,33 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public Usuario findByEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
+
+
     public Usuario saveUsuario(Usuario usuario) {
-        usuario.setSenha(getMd5Hash(usuario.getSenha()));
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        usuario.setDataCadastro(new Date());
         return usuarioRepository.save(usuario);
-    }
-
-    public void teste(String teste){
-        System.out.println("TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe " + getMd5Hash(teste));
-    }
-
-    public void saveAllUsuarios(List<Usuario> usuarios) {
-        usuarios.forEach(usuario -> {
-            usuario.setSenha(getMd5Hash(usuario.getSenha()));
-        });
-        usuarioRepository.saveAll(usuarios);
     }
 
     public Usuario updateUsuario(Long id, Usuario updatedUsuario) {
         Optional<Usuario> existingUsuario = usuarioRepository.findById(id);
         if (existingUsuario.isPresent()) {
+
             existingUsuario.get().setNome(updatedUsuario.getNome());
             existingUsuario.get().setEmail(updatedUsuario.getEmail());
 
             return usuarioRepository.save(existingUsuario.get());
         }
         return null;
+    }
+
+    public Usuario atualizarSenha(Usuario usuario){
+        usuario.setDataAlteracao(new Date());
+        usuario.setNeedUpdatePass(false);
+        return usuarioRepository.save(usuario);
     }
 
     public List<Usuario> buscarPorNome(String nome) {
@@ -58,24 +74,31 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public static String getMd5Hash(String input){  
-        try{  
-            //static getInstance() method is called with hashing MD5  
-            MessageDigest md = MessageDigest.getInstance("MD5");  
-            //calculating message digest of an input that return array of byte  
-            byte[] messageDigest = md.digest(input.getBytes());  
-            //converting byte array into signum representation  
-            BigInteger no = new BigInteger(1, messageDigest);  
-            //converting message digest into hex value  
-            String hashtext = no.toString(16);  
-            while (hashtext.length() < 32) {  
-hashtext = "0" + hashtext;  
-}  
-                return hashtext;  
-        }catch(Exception e){
-            e.printStackTrace();
+    public static UsuarioDTO fromEntity(Usuario usuario) {
+        if (usuario == null) {
+            return null;
         }
-        return input;
-    }     
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setIdUsuario(usuario.getIdUsuario());
+        usuarioDTO.setNome(usuario.getNome());
+        usuarioDTO.setEmail(usuario.getEmail());
+        usuarioDTO.setTipoUsuario(usuario.getTipoUsuario());
+        usuarioDTO.setIdUsuarioQueCadastrou(usuario.getIdUsuarioQueCadastrou());
+        usuarioDTO.setNeedUpdatePass(usuario.getNeedUpdatePass());
+        usuarioDTO.setEmpresa(usuario.getEmpresa());
+        usuarioDTO.setDataCadastro(usuario.getDataCadastro());
+        usuarioDTO.setDataAlteracao(usuario.getDataAlteracao());
+
+        return usuarioDTO;
+    }
+
+    public static List<UsuarioDTO> fromEntityList(List<Usuario> usuarios) {
+        return usuarios == null ? List.of() : usuarios.stream()
+                .map(UsuarioService::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+   
 
 }

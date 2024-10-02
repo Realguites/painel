@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,14 +47,14 @@ public class EmpresaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Empresa> updateEmpresa(@PathVariable Long id, @RequestBody Empresa newEmpresa) {
+    public ResponseEntity<Empresa> updateEmpresa(@PathVariable("id") Long id, @RequestBody Empresa newEmpresa) {
         newEmpresa.setDataAlteracao(new Date());
         Empresa updatedEmpresa = empresaService.updateEmpresa(id, newEmpresa);
         return updatedEmpresa != null ? ResponseEntity.ok(updatedEmpresa) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmpresa(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEmpresa(@PathVariable("id") Long id) {
         empresaService.deleteEmpresa(id);
         return ResponseEntity.noContent().build();
     }

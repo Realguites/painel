@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.tasktime.springboot.model.Usuario;
 
@@ -31,7 +32,7 @@ public class UserAuthenticated implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(() -> "read");
+    return List.of(new SimpleGrantedAuthority(user.getTipoUsuario().getDescricao())); 
   }
 
   @Override

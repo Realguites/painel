@@ -34,10 +34,8 @@ public class EmpresaService {
     public Empresa updateEmpresa(Long id, Empresa updatedEmpresa) {
         Optional<Empresa> existingEmpresa = empresaRepository.findById(id);
         if (existingEmpresa.isPresent()) {
-            //existingEmpresa.get().setNome(updatedEmpresa.getNome());
-           // existingEmpresa.get().setEmail(updatedEmpresa.getEmail());
-
-            return empresaRepository.save(existingEmpresa.get());
+            updatedEmpresa.setIdEmpresa(id);
+            return empresaRepository.save(updatedEmpresa);
         }
         return null;
     }
